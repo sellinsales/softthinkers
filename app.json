@@ -1,0 +1,76 @@
+{
+  "expo": {
+    "name": "LingoHunt",
+    "slug": "lingohunt",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFF9F0"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.lingohunt.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "LingoHunt uses the camera to scan objects and help you learn new words!",
+        "NSMicrophoneUsageDescription": "LingoHunt uses the microphone for voice pronunciation practice.",
+        "NSPhotoLibraryUsageDescription": "LingoHunt can save your scanned objects for offline practice."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFF9F0"
+      },
+      "package": "com.lingohunt.app",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "LingoHunt uses the camera to scan real-world objects and help children learn vocabulary!"
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notification-icon.png",
+          "color": "#4ECDC4"
+        }
+      ],
+      "expo-asset"
+    ],
+    "scheme": "lingohunt",
+    "newArchEnabled": true,
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "firebaseApiKey": "AIzaSyBmXlH2Sc4UAeI6r0e3C74QrijxWZ_1S6M",
+      "firebaseAuthDomain": "",
+      "firebaseProjectId": "lingohunt-3bde2",
+      "firebaseStorageBucket": "lingohunt-3bde2.firebasestorage.app",
+      "firebaseMessagingSenderId": "1026872790378",
+      "firebaseAppId": "1:1026872790378:android:c37315219b73b0eab4a913",
+      "googleVisionApiKey": ""
+    }
+  }
+}
