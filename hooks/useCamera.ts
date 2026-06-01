@@ -10,7 +10,7 @@ const USE_MOCK = !Constants.expoConfig?.extra?.googleVisionApiKey;
 export type ScanStatus = 'idle' | 'scanning' | 'success' | 'no_match' | 'error';
 
 export interface UseCameraReturn {
-  cameraRef: React.RefObject<CameraView>;
+  cameraRef: React.RefObject<CameraView | null>;
   permission: ReturnType<typeof useCameraPermissions>[0];
   requestPermission: ReturnType<typeof useCameraPermissions>[1];
   facing: CameraType;

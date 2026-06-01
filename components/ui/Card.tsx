@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pressable, View, Text, StyleSheet, ViewStyle } from 'react-native';
+import { Pressable, View, Text, StyleSheet, ViewStyle, StyleProp } from 'react-native';
 import Animated, {
   useSharedValue, useAnimatedStyle, withSpring,
 } from 'react-native-reanimated';
@@ -12,7 +12,7 @@ import { hapticLight } from '../../lib/audio/speech';
 interface CardProps {
   children: React.ReactNode;
   onPress?: () => void;
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
   gradient?: readonly [string, string];
   elevated?: boolean;
   radius?: number;
@@ -63,7 +63,7 @@ interface WordCardProps {
   category: string;
   isLearned?: boolean;
   onPress?: () => void;
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
 }
 
 export const WordCard: React.FC<WordCardProps> = ({
@@ -100,7 +100,7 @@ interface StatCardProps {
   label: string;
   emoji: string;
   color: string;
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
 }
 
 export const StatCard: React.FC<StatCardProps> = ({ value, label, emoji, color, style }) => (
