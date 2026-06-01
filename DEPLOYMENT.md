@@ -70,7 +70,7 @@ GitHub Actions workflow:
 
 - `.github/workflows/deploy.yml`
 
-The workflow is attached to the GitHub Environment named `production`.
+The workflow is attached to the GitHub Environment named `prd`.
 If your environment uses a different name, update the `environment:` value in the workflow file.
 
 Required GitHub secrets:
