@@ -11,6 +11,7 @@ permissions:
 
 jobs:
   deploy:
+    environment: production
     runs-on: windows-latest
     env:
       SOFTTHINKERS_FTP_PASSWORD: ${{ secrets.SOFTTHINKERS_FTP_PASSWORD }}
