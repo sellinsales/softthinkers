@@ -4,6 +4,7 @@ param(
     [string]$Username = 'softthinkers',
     [string]$Password = $env:SOFTTHINKERS_FTP_PASSWORD,
     [string]$RemoteRoot = 'public_html',
+    [switch]$BuildBundle = $true,
     [switch]$AllowInsecureFtps
 )
 
@@ -19,6 +20,9 @@ if ([string]::IsNullOrWhiteSpace($Password)) {
 $curlPath = Get-CurlExecutable
 $repoRoot = Split-Path -Parent $PSScriptRoot
 
-Publish-FtpTree -CurlPath $curlPath -Server $Server -Port $Port -Username $Username -Password $Password -LocalPath (Join-Path $repoRoot 'softthinkers-site/public') -RemoteBasePath $RemoteRoot -AllowInsecureFtps:$AllowInsecureFtps
-Publish-FtpTree -CurlPath $curlPath -Server $Server -Port $Port -Username $Username -Password $Password -LocalPath (Join-Path $repoRoot 'softthinkers-site/src') -RemoteBasePath ($RemoteRoot + '/src') -AllowInsecureFtps:$AllowInsecureFtps
-Publish-FtpTree -CurlPath $curlPath -Server $Server -Port $Port -Username $Username -Password $Password -LocalPath (Join-Path $repoRoot 'softthinkers-site/config/app.php') -RemoteBasePath ($RemoteRoot + '/config/app.php') -AllowInsecureFtps:$AllowInsecureFtps
+if ($BuildBundle) {
+    & (Join-Path $PSScriptRoot 'New-DeploymentBundle.ps1')
+}
+
+$bundleWebsiteRoot = Join-Path $repoRoot 'dist\deploy\public_html'
+Publish-FtpTree -CurlPath $curlPath -Server $Server -Port $Port -Username $Username -Password $Password -LocalPath $bundleWebsiteRoot -RemoteBasePath $RemoteRoot -AllowInsecureFtps:$AllowInsecureFtps

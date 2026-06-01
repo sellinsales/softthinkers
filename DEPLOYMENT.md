@@ -66,6 +66,35 @@ GitHub remote for this workspace:
 git remote add origin https://github.com/sellinsales/softthinkers.git
 ```
 
+GitHub Actions workflow:
+
+- `.github/workflows/deploy.yml`
+
+Required GitHub secrets:
+
+- `SOFTTHINKERS_FTP_PASSWORD`
+- `SOFTTHINKERS_DB_PASSWORD`
+
+Recommended GitHub repository variables:
+
+- `SOFTTHINKERS_DB_HOST`
+- `SOFTTHINKERS_DB_PORT`
+- `SOFTTHINKERS_DB_NAME`
+- `SOFTTHINKERS_DB_USER`
+- `SOFTTHINKERS_SITE_URL`
+- `SOFTTHINKERS_SITE_TIMEZONE`
+- `SOFTTHINKERS_LEAD_STORAGE`
+
+Default assumptions if variables are not set:
+
+- DB host: `localhost`
+- DB port: `3306`
+- DB name: `softthinkers_lingohunt`
+- DB user: `softthinkers_akeel`
+- site URL: `https://softthinkers.com`
+- timezone: `Asia/Karachi`
+- lead storage: `database`
+
 FTP deployment scripts:
 
 ```powershell
@@ -79,6 +108,14 @@ Or deploy both:
 ```powershell
 $env:SOFTTHINKERS_FTP_PASSWORD='your_password'
 powershell -ExecutionPolicy Bypass -File .\scripts\deploy-all.ps1
+```
+
+Each deployment first builds a clean bundle in `dist/deploy/` so the uploaded file tree matches the intended live layout before FTP transfer.
+
+You can build the bundle without uploading:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\New-DeploymentBundle.ps1
 ```
 
 To push the git repo after adding credentials locally:

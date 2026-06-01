@@ -1,0 +1,65 @@
+name: Deploy SoftThinkers
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: windows-latest
+    env:
+      SOFTTHINKERS_FTP_PASSWORD: ${{ secrets.SOFTTHINKERS_FTP_PASSWORD }}
+      SOFTTHINKERS_DB_PASSWORD: ${{ secrets.SOFTTHINKERS_DB_PASSWORD }}
+      SOFTTHINKERS_DB_HOST: ${{ vars.SOFTTHINKERS_DB_HOST }}
+      SOFTTHINKERS_DB_PORT: ${{ vars.SOFTTHINKERS_DB_PORT }}
+      SOFTTHINKERS_DB_NAME: ${{ vars.SOFTTHINKERS_DB_NAME }}
+      SOFTTHINKERS_DB_USER: ${{ vars.SOFTTHINKERS_DB_USER }}
+      SOFTTHINKERS_SITE_URL: ${{ vars.SOFTTHINKERS_SITE_URL }}
+      SOFTTHINKERS_SITE_TIMEZONE: ${{ vars.SOFTTHINKERS_SITE_TIMEZONE }}
+      SOFTTHINKERS_LEAD_STORAGE: ${{ vars.SOFTTHINKERS_LEAD_STORAGE }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate required secrets
+        shell: pwsh
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:SOFTTHINKERS_FTP_PASSWORD)) {
+            throw "Missing GitHub secret: SOFTTHINKERS_FTP_PASSWORD"
+          }
+          if ([string]::IsNullOrWhiteSpace($env:SOFTTHINKERS_DB_PASSWORD)) {
+            throw "Missing GitHub secret: SOFTTHINKERS_DB_PASSWORD"
+          }
+
+      - name: Generate production configs
+        shell: pwsh
+        run: ./scripts/New-HostedConfigs.ps1
+
+      - name: Build deployment bundle
+        shell: pwsh
+        run: ./scripts/New-DeploymentBundle.ps1
+
+      - name: Deploy website and API
+        shell: pwsh
+        run: ./scripts/deploy-all.ps1
+
+      - name: Verify live website
+        shell: pwsh
+        run: |
+          $response = Invoke-WebRequest -Uri 'https://softthinkers.com' -UseBasicParsing
+          if ($response.StatusCode -lt 200 -or $response.StatusCode -ge 400) {
+            throw "softthinkers.com returned unexpected status $($response.StatusCode)"
+          }
+
+      - name: Verify live API health
+        shell: pwsh
+        run: |
+          $response = Invoke-WebRequest -Uri 'https://lingohunt.softthinkers.com/api/health' -UseBasicParsing
+          if ($response.StatusCode -lt 200 -or $response.StatusCode -ge 400) {
+            throw "API health returned unexpected status $($response.StatusCode)"
+          }

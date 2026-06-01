@@ -4,6 +4,7 @@ param(
     [string]$Username = 'softthinkers',
     [string]$Password = $env:SOFTTHINKERS_FTP_PASSWORD,
     [string]$RemoteRoot = 'lingohunt.softthinkers.com',
+    [switch]$BuildBundle = $true,
     [switch]$AllowInsecureFtps
 )
 
@@ -19,6 +20,9 @@ if ([string]::IsNullOrWhiteSpace($Password)) {
 $curlPath = Get-CurlExecutable
 $repoRoot = Split-Path -Parent $PSScriptRoot
 
-Publish-FtpTree -CurlPath $curlPath -Server $Server -Port $Port -Username $Username -Password $Password -LocalPath (Join-Path $repoRoot 'backend/public') -RemoteBasePath $RemoteRoot -AllowInsecureFtps:$AllowInsecureFtps
-Publish-FtpTree -CurlPath $curlPath -Server $Server -Port $Port -Username $Username -Password $Password -LocalPath (Join-Path $repoRoot 'backend/src') -RemoteBasePath ($RemoteRoot + '/src') -AllowInsecureFtps:$AllowInsecureFtps
-Publish-FtpTree -CurlPath $curlPath -Server $Server -Port $Port -Username $Username -Password $Password -LocalPath (Join-Path $repoRoot 'backend/config/app.php') -RemoteBasePath ($RemoteRoot + '/config/app.php') -AllowInsecureFtps:$AllowInsecureFtps
+if ($BuildBundle) {
+    & (Join-Path $PSScriptRoot 'New-DeploymentBundle.ps1')
+}
+
+$bundleApiRoot = Join-Path $repoRoot 'dist\deploy\lingohunt.softthinkers.com'
+Publish-FtpTree -CurlPath $curlPath -Server $Server -Port $Port -Username $Username -Password $Password -LocalPath $bundleApiRoot -RemoteBasePath $RemoteRoot -AllowInsecureFtps:$AllowInsecureFtps

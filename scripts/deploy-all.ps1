@@ -16,4 +16,4 @@ if ([string]::IsNullOrWhiteSpace($Password)) {
 }
 
 & (Join-Path $PSScriptRoot 'deploy-softthinkers.ps1') -Server $Server -Port $Port -Username $Username -Password $Password -RemoteRoot $WebsiteRoot -AllowInsecureFtps:$AllowInsecureFtps
-& (Join-Path $PSScriptRoot 'deploy-lingohunt-api.ps1') -Server $Server -Port $Port -Username $Username -Password $Password -RemoteRoot $ApiRoot -AllowInsecureFtps:$AllowInsecureFtps
+& (Join-Path $PSScriptRoot 'deploy-lingohunt-api.ps1') -Server $Server -Port $Port -Username $Username -Password $Password -RemoteRoot $ApiRoot -BuildBundle:$false -AllowInsecureFtps:$AllowInsecureFtps

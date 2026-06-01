@@ -14,4 +14,5 @@ softthinkers-site/storage/*.ndjson
 softthinkers-site/.cache/
 backend/config/app.php
 *.zip
+dist/
 Thumbs.db
