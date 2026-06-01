@@ -6,8 +6,6 @@ import {
 import { router } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { signInAnonymously } from 'firebase/auth';
-import { auth, hasFirebaseConfig } from '../lib/firebase/config';
 import { useAppStore } from '../stores/appStore';
 import { setOnboardingComplete } from '../lib/storage/cache';
 import { Lumi } from '../components/mascot/Lumi';
@@ -61,13 +59,7 @@ export default function OnboardingScreen() {
   async function handleFinish() {
     setLoading(true);
     try {
-      let uid: string;
-      if (hasFirebaseConfig && auth) {
-        const cred = await signInAnonymously(auth);
-        uid = cred.user.uid;
-      } else {
-        uid = 'local_' + Math.random().toString(36).slice(2, 10);
-      }
+      const uid = 'local_' + Math.random().toString(36).slice(2, 10);
       await createProfile(uid, childName.trim() || 'Explorer', childAge);
       await updateSettings({ language });
       await setOnboardingComplete();

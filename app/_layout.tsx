@@ -26,14 +26,14 @@ export default function RootLayout() {
   });
   const [bootstrapped, setBootstrapped] = useState(false);
 
-  const { initFromCache, loadFromFirebase, setLoading } = useAppStore();
+  const { initFromCache, loadFromApi, setLoading } = useAppStore();
 
   useEffect(() => {
     async function bootstrap() {
       const uid = await getLastUid();
       if (uid) {
         await initFromCache(uid);
-        loadFromFirebase(uid).catch(() => {});
+        loadFromApi(uid).catch(() => {});
       } else {
         setLoading(false);
       }
@@ -44,7 +44,7 @@ export default function RootLayout() {
       setBootstrapped(true);
       await SplashScreen.hideAsync().catch(() => {});
     });
-  }, [initFromCache, loadFromFirebase, setLoading]);
+  }, [initFromCache, loadFromApi, setLoading]);
 
   useEffect(() => {
     if (fontsLoaded || fontError) {

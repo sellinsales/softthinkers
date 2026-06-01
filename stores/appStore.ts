@@ -4,8 +4,27 @@ import {
   ChildProfile, UserStats, UserSettings, LearnedWord,
   Badge, DailyMissions, AppState, VocabWord,
 } from '../types';
-import { getUserDocument, createUserDocument, updateUserStats, updateUserSettings, saveLearnedWord, getLearnedWords, updateStreak } from '../lib/firebase/db';
-import { cacheUserDoc, getCachedUserDoc, cacheLearnedWords, getCachedLearnedWords, appendLearnedWord, saveLastUid } from '../lib/storage/cache';
+import {
+  getUserDocument,
+  createUserDocument,
+  updateUserStats,
+  updateUserSettings,
+  saveLearnedWord,
+  getLearnedWords,
+  updateStreak,
+  getDailyMissions,
+  saveDailyMissions,
+} from '../lib/backend/db';
+import {
+  cacheUserDoc,
+  getCachedUserDoc,
+  cacheLearnedWords,
+  getCachedLearnedWords,
+  appendLearnedWord,
+  saveLastUid,
+  cacheDailyMissions,
+  getCachedDailyMissions,
+} from '../lib/storage/cache';
 import { ALL_BADGES } from '../constants/badges';
 import { xpToLevel, XP_PER_LEVEL } from '../constants/vocabulary';
 import { generateDailyMissions } from '../lib/missions/generator';
@@ -39,7 +58,7 @@ const defaultSettings: UserSettings = {
 interface AppStore extends AppState {
   // Auth / init
   initFromCache: (uid: string) => Promise<void>;
-  loadFromFirebase: (uid: string) => Promise<void>;
+  loadFromApi: (uid: string) => Promise<void>;
   createProfile: (uid: string, name: string, age: number) => Promise<void>;
 
   // Settings
@@ -50,8 +69,8 @@ interface AppStore extends AppState {
   isWordLearned: (wordId: string) => boolean;
 
   // Missions
-  loadDailyMissions: (uid: string) => void;
-  completeMission: (missionId: string) => void;
+  loadDailyMissions: (uid: string) => Promise<void>;
+  completeMission: (missionId: string) => Promise<void>;
 
   // UI helpers
   setLoading: (loading: boolean) => void;
@@ -95,53 +114,59 @@ export const useAppStore = create<AppStore>((set, get) => ({
   },
 
   // ── Load from Firebase (sync) ─────────────────────────────────────────────
-  loadFromFirebase: async (uid: string) => {
+  loadFromApi: async (uid: string) => {
     try {
-      const [fbDoc, fbWords] = await Promise.all([
+      const [remoteDoc, remoteWords] = await Promise.all([
         getUserDocument(uid),
         getLearnedWords(uid),
       ]);
-      if (fbDoc) {
-        // Update streak while syncing
-        const updatedStats = await updateStreak(uid, fbDoc.stats);
-        const updatedDoc = { ...fbDoc, stats: updatedStats };
+      if (remoteDoc) {
+        const updatedStats = await updateStreak(uid, remoteDoc.stats);
+        const updatedDoc = { ...remoteDoc, stats: updatedStats };
         await cacheUserDoc(uid, updatedDoc);
-        await cacheLearnedWords(uid, fbWords);
+        await cacheLearnedWords(uid, remoteWords);
         await saveLastUid(uid);
         set({
           profile: updatedDoc.profile,
           stats: updatedDoc.stats,
           settings: updatedDoc.settings,
-          learnedWords: fbWords,
+          learnedWords: remoteWords,
           isLoading: false,
         });
       }
     } catch (e) {
-      console.warn('[Store] loadFromFirebase error:', e);
+      console.warn('[Store] loadFromApi error:', e);
     }
   },
 
   // ── Create new profile ────────────────────────────────────────────────────
   createProfile: async (uid: string, name: string, age: number) => {
-    const profile: ChildProfile = {
+    const fallbackProfile: ChildProfile = {
       uid, name, age,
       avatarId: 'fox_default',
       createdAt: new Date().toISOString(),
     };
     const settings = { ...defaultSettings, onboardingComplete: true };
-    const userDoc = {
-      profile,
+    const fallbackUserDoc = {
+      profile: fallbackProfile,
       stats: defaultStats,
       settings,
-      updatedAt: new Date() as never,
+      updatedAt: new Date().toISOString(),
     };
+    const remoteUserDoc = await createUserDocument(uid, { name, age, avatarId: 'fox_default' }, settings);
+    const activeUserDoc = remoteUserDoc ?? fallbackUserDoc;
+
     await Promise.all([
-      createUserDocument(uid, { name, age, avatarId: 'fox_default' }, settings),
-      cacheUserDoc(uid, userDoc),
+      cacheUserDoc(uid, activeUserDoc),
       cacheLearnedWords(uid, []),
       saveLastUid(uid),
     ]);
-    set({ profile, stats: defaultStats, settings, isLoading: false });
+    set({
+      profile: activeUserDoc.profile,
+      stats: activeUserDoc.stats,
+      settings: activeUserDoc.settings,
+      isLoading: false,
+    });
   },
 
   // ── Settings ──────────────────────────────────────────────────────────────
@@ -150,7 +175,11 @@ export const useAppStore = create<AppStore>((set, get) => ({
     if (!uid) return;
     const updated = { ...get().settings, ...settings };
     set({ settings: updated });
-    await updateUserSettings(uid, settings);
+    try {
+      await updateUserSettings(uid, settings);
+    } catch {
+      // local state already updated
+    }
   },
 
   // ── Record a learned word ─────────────────────────────────────────────────
@@ -190,11 +219,15 @@ export const useAppStore = create<AppStore>((set, get) => ({
     set({ learnedWords: newWords, stats: newStats });
 
     // Persist
-    await Promise.all([
-      saveLearnedWord(uid, learnedWord),
-      updateUserStats(uid, newStats),
-      appendLearnedWord(uid, learnedWord),
-    ]);
+    await appendLearnedWord(uid, learnedWord);
+    try {
+      await Promise.all([
+        saveLearnedWord(uid, learnedWord),
+        updateUserStats(uid, newStats),
+      ]);
+    } catch {
+      // local state and cache already updated
+    }
   },
 
   isWordLearned: (wordId: string) => {
@@ -202,14 +235,37 @@ export const useAppStore = create<AppStore>((set, get) => ({
   },
 
   // ── Daily missions ─────────────────────────────────────────────────────────
-  loadDailyMissions: (uid: string) => {
+  loadDailyMissions: async (uid: string) => {
     const today = format(new Date(), 'yyyy-MM-dd');
-    const missions = generateDailyMissions(today);
+    const cached = await getCachedDailyMissions(uid, today);
+    if (cached) {
+      set({ dailyMissions: cached });
+    }
+
+    try {
+      const remote = await getDailyMissions(uid, today);
+      if (remote) {
+        await cacheDailyMissions(uid, today, remote);
+        set({ dailyMissions: remote });
+        return;
+      }
+    } catch {
+      // ignore and fall back to local generation
+    }
+
+    const missions = cached ?? generateDailyMissions(today);
+    await cacheDailyMissions(uid, today, missions);
     set({ dailyMissions: missions });
+
+    try {
+      await saveDailyMissions(uid, missions);
+    } catch {
+      // offline or API unavailable
+    }
   },
 
-  completeMission: (missionId: string) => {
-    const { dailyMissions, stats } = get();
+  completeMission: async (missionId: string) => {
+    const { dailyMissions, stats, profile } = get();
     if (!dailyMissions) return;
     const updated = {
       ...dailyMissions,
@@ -219,10 +275,27 @@ export const useAppStore = create<AppStore>((set, get) => ({
     };
     const allCompleted = updated.missions.every((m) => m.completed);
     const xpBonus = allCompleted ? dailyMissions.bonusXp : 0;
+    const nextStats: UserStats = {
+      ...stats,
+      totalXp: stats.totalXp + xpBonus,
+      missionsCompleted: stats.missionsCompleted + 1,
+    };
     set({
       dailyMissions: { ...updated, allCompleted },
-      stats: { ...stats, totalXp: stats.totalXp + xpBonus, missionsCompleted: stats.missionsCompleted + 1 },
+      stats: nextStats,
     });
+
+    if (!profile?.uid) return;
+
+    await cacheDailyMissions(profile.uid, updated.date, { ...updated, allCompleted });
+    try {
+      await Promise.all([
+        saveDailyMissions(profile.uid, { ...updated, allCompleted }),
+        updateUserStats(profile.uid, nextStats),
+      ]);
+    } catch {
+      // offline or API unavailable
+    }
   },
 
   setLoading: (loading: boolean) => set({ isLoading: loading }),

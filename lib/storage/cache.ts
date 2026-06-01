@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { UserDocument } from '../firebase/db';
+import { UserDocument } from '../backend/db';
 import { DailyMissions, LearnedWord } from '../../types';
 
 // ─── Keys ─────────────────────────────────────────────────────────────────────

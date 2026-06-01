@@ -8,34 +8,38 @@ $layoutPath = is_file(__DIR__ . '/src/layout.php')
 
 require $layoutPath;
 
-softthinkers_render_page('Portfolio', 'portfolio', static function (array $content): void {
+softthinkers_render_page('Products', 'products', static function (array $content): void {
     ?>
-    <section class="page-hero compact">
-      <p class="eyebrow">Portfolio</p>
-      <h1>Projects across mobility, commerce, learning, and games.</h1>
+    <section class="page-hero">
+      <p class="eyebrow">Products</p>
+      <h1>Products across mobility, learning, family growth, and managed hosting.</h1>
       <p class="lead">
-        SoftThinkers is positioned to show both client services and product-minded builds in one place.
+        SoftThinkers is not limited to service delivery. The portfolio also includes product-minded work
+        in transportation, kids learning games, parenting support, and digital infrastructure.
       </p>
     </section>
 
     <section class="section-block">
-      <?php softthinkers_card_list($content['projects']); ?>
+      <?php softthinkers_section_heading('Product Portfolio', 'Current product categories and ventures', 'These product lines represent both active builds and strategic directions the company can take to market.'); ?>
+      <?php softthinkers_render_product_cards($content['products']); ?>
     </section>
 
-    <section class="section-block split-layout">
-      <div>
-        <p class="eyebrow">Categories</p>
-        <ul class="benefit-list">
-          <li>Learning and educational apps</li>
-          <li>Ride hailing and taxi booking systems</li>
-          <li>Marketplace and commerce products</li>
-          <li>Internal dashboards and operational systems</li>
-        </ul>
-      </div>
-      <div class="callout-panel">
-        <p>
-          This page is a portfolio shell. Project pages and screenshots can be added next once branding and case-study content are ready.
+    <section class="section-block">
+      <?php softthinkers_section_heading('Strategic Verticals', 'Where these products fit', 'The portfolio spans practical consumer needs, educational engagement, and digital operating platforms.'); ?>
+      <?php softthinkers_render_service_cards($content['portfolioHighlights']); ?>
+    </section>
+
+    <section class="section-block trust-layout">
+      <div class="why-card">
+        <p class="eyebrow">Product Direction</p>
+        <h2>Designed for growth, not just launch.</h2>
+        <p class="lead">
+          Each product line is framed as an expandable platform: ride booking can evolve into regional operations,
+          kids games can connect to progression systems, and hosting can anchor a broader client ecosystem.
         </p>
+      </div>
+      <div class="trust-side">
+        <?php softthinkers_render_metrics($content['metrics']); ?>
       </div>
     </section>
     <?php

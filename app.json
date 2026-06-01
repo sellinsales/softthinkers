@@ -64,6 +64,7 @@
       "typedRoutes": true
     },
     "extra": {
+      "backendApiBaseUrl": "https://lingohunt.softthinkers.com/api",
       "firebaseApiKey": "AIzaSyBmXlH2Sc4UAeI6r0e3C74QrijxWZ_1S6M",
       "firebaseAuthDomain": "",
       "firebaseProjectId": "lingohunt-3bde2",
