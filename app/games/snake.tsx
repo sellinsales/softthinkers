@@ -12,6 +12,7 @@ import Animated, {
 import { useAppStore } from '../../stores/appStore';
 import { VOCABULARY } from '../../constants/vocabulary';
 import { hapticSuccess, hapticError, hapticLight } from '../../lib/audio/speech';
+import { playSnakeEat, playSnakeDie, playTap } from '../../lib/audio/sounds';
 
 // ─── Grid config ──────────────────────────────────────────────────────────────
 
@@ -95,6 +96,7 @@ export default function SnakeScreen() {
         setPhase('dead');
         clearInterval(loopRef.current);
         void hapticError();
+        void playSnakeDie();
         return prev;
       }
       const ateFood = nh.col === snakeRef.current[0]?.col && nh.row === snakeRef.current[0]?.row
@@ -110,6 +112,7 @@ export default function SnakeScreen() {
 
       if (ate) {
         void hapticSuccess();
+        void playSnakeEat();
         const newFood = { cell: randCell(newSnake), word: randomFood() };
         setFood(newFood);
         setScore((s) => s + 1);

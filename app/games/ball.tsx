@@ -11,6 +11,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAppStore } from '../../stores/appStore';
 import { VOCABULARY } from '../../constants/vocabulary';
 import { hapticSuccess, hapticError, hapticLight } from '../../lib/audio/speech';
+import { playBallBounce, playBallBreak, playBallWin, playBallLose } from '../../lib/audio/sounds';
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
@@ -144,6 +145,7 @@ export default function BallScreen() {
       vx = (hit - 0.5) * 8;
       vy = -Math.abs(vy);
       void hapticLight();
+      void playBallBounce();
     }
 
     // Block collisions
@@ -166,6 +168,7 @@ export default function BallScreen() {
           setLastWord(`${block.word.emoji} ${block.word.en} = ${block.word.sv}`);
           showWordPop();
           void hapticSuccess();
+          void playBallBreak();
           return { ...block, alive: false };
         }
         return block;
@@ -174,6 +177,7 @@ export default function BallScreen() {
       if (aliveCount === 0) {
         phaseRef.current = 'won';
         setPhase('won');
+        void playBallWin();
         void awardBonus(Math.max(10, scoreRef.current * 4), Math.max(2, scoreRef.current));
         cancelAnimationFrame(rafRef.current!);
         return updated;
@@ -189,6 +193,7 @@ export default function BallScreen() {
         phaseRef.current = 'lost';
         setPhase('lost');
         void hapticError();
+        void playBallLose();
         void awardBonus(Math.max(5, scoreRef.current * 2), Math.max(1, scoreRef.current));
         cancelAnimationFrame(rafRef.current!);
         return;

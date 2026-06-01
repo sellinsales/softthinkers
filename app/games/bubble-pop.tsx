@@ -13,6 +13,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAppStore } from '../../stores/appStore';
 import { VOCABULARY } from '../../constants/vocabulary';
 import { hapticSuccess, hapticError, hapticLight } from '../../lib/audio/speech';
+import { playBubblePop, playBubbleWrong, playBubbleEscape } from '../../lib/audio/sounds';
 
 const { width: SW, height: SH } = Dimensions.get('window');
 const BUBBLE_SIZE = 80;
@@ -58,7 +59,10 @@ function FloatingBubble({
       -BUBBLE_SIZE - 20,
       { duration, easing: Easing.linear },
       (finished) => {
-        if (finished) runOnJS(onEscape)(bubble.id);
+        if (finished) {
+          runOnJS(playBubbleEscape)();
+          runOnJS(onEscape)(bubble.id);
+        }
       },
     );
   }, []);
@@ -75,6 +79,7 @@ function FloatingBubble({
   function handleTap() {
     void hapticLight();
     if (bubble.isTarget) {
+      void playBubblePop();
       // Correct — burst effect
       scale.value = withSequence(
         withSpring(1.4, { damping: 5 }),
@@ -82,6 +87,7 @@ function FloatingBubble({
       );
       opacity.value = withTiming(0, { duration: 200 });
     } else {
+      void playBubbleWrong();
       // Wrong — shake
       shakeX.value = withSequence(
         withTiming(-12, { duration: 60 }),

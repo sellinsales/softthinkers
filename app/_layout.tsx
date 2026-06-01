@@ -11,6 +11,7 @@ import { useFonts,
 import * as SplashScreen from 'expo-splash-screen';
 import { useAppStore } from '../stores/appStore';
 import { getLastUid } from '../lib/storage/cache';
+import { sounds } from '../lib/audio/sounds';
 import { Colors } from '../constants/theme';
 
 void SplashScreen.preventAutoHideAsync().catch(() => {});
@@ -27,6 +28,9 @@ export default function RootLayout() {
   const [bootstrapped, setBootstrapped] = useState(false);
 
   const { initFromCache, loadFromApi, setLoading } = useAppStore();
+
+  // Initialise audio on first mount
+  useEffect(() => { void sounds.init(); }, []);
 
   useEffect(() => {
     async function bootstrap() {

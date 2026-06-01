@@ -12,6 +12,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useAppStore } from '../../stores/appStore';
 import { VOCABULARY } from '../../constants/vocabulary';
 import { hapticSuccess, hapticError, hapticLight } from '../../lib/audio/speech';
+import { playJellyPop, playJellyWrong, playJellyUp } from '../../lib/audio/sounds';
 
 const { width: SW } = Dimensions.get('window');
 
@@ -52,6 +53,7 @@ function JellyHole({ index, word, isTarget, onTap }: JellyHoleProps) {
 
   useEffect(() => {
     if (word) {
+      void playJellyUp();
       // Pop up with jelly bounce
       opacity.value = withTiming(1, { duration: 80 });
       scaleY.value = withSpring(1, { damping: 6, stiffness: 280, mass: 0.6 });
@@ -196,6 +198,7 @@ export default function JellyScreen() {
 
     if (isTarget) {
       void hapticSuccess();
+      void playJellyPop();
       setScore((s) => {
         scoreRef.current = s + 1;
         return s + 1;
@@ -213,6 +216,7 @@ export default function JellyScreen() {
       nextRound(round);
     } else {
       void hapticError();
+      void playJellyWrong();
       setMiss((m) => {
         const next = m + 1;
         if (next >= MAX_MISS) {
