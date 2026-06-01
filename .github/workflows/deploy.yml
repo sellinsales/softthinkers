@@ -16,6 +16,12 @@ jobs:
     env:
       SOFTTHINKERS_FTP_PASSWORD: ${{ secrets.SOFTTHINKERS_FTP_PASSWORD }}
       SOFTTHINKERS_DB_PASSWORD: ${{ secrets.SOFTTHINKERS_DB_PASSWORD }}
+      SOFTTHINKERS_FTP_SERVER: ${{ vars.SOFTTHINKERS_FTP_SERVER }}
+      SOFTTHINKERS_FTP_PORT: ${{ vars.SOFTTHINKERS_FTP_PORT }}
+      SOFTTHINKERS_FTP_USERNAME: ${{ vars.SOFTTHINKERS_FTP_USERNAME }}
+      SOFTTHINKERS_WEBSITE_ROOT: ${{ vars.SOFTTHINKERS_WEBSITE_ROOT }}
+      SOFTTHINKERS_API_ROOT: ${{ vars.SOFTTHINKERS_API_ROOT }}
+      SOFTTHINKERS_ALLOW_INSECURE_FTPS: ${{ vars.SOFTTHINKERS_ALLOW_INSECURE_FTPS }}
       SOFTTHINKERS_DB_HOST: ${{ vars.SOFTTHINKERS_DB_HOST }}
       SOFTTHINKERS_DB_PORT: ${{ vars.SOFTTHINKERS_DB_PORT }}
       SOFTTHINKERS_DB_NAME: ${{ vars.SOFTTHINKERS_DB_NAME }}
@@ -47,7 +53,19 @@ jobs:
 
       - name: Deploy website and API
         shell: pwsh
-        run: ./scripts/deploy-all.ps1
+        run: |
+          $server = if ([string]::IsNullOrWhiteSpace($env:SOFTTHINKERS_FTP_SERVER)) { 'ftp.softthinkers.com' } else { $env:SOFTTHINKERS_FTP_SERVER }
+          $port = if ([string]::IsNullOrWhiteSpace($env:SOFTTHINKERS_FTP_PORT)) { 21 } else { [int]$env:SOFTTHINKERS_FTP_PORT }
+          $username = if ([string]::IsNullOrWhiteSpace($env:SOFTTHINKERS_FTP_USERNAME)) { 'softthinkers' } else { $env:SOFTTHINKERS_FTP_USERNAME }
+          $websiteRoot = if ([string]::IsNullOrWhiteSpace($env:SOFTTHINKERS_WEBSITE_ROOT)) { 'public_html' } else { $env:SOFTTHINKERS_WEBSITE_ROOT }
+          $apiRoot = if ([string]::IsNullOrWhiteSpace($env:SOFTTHINKERS_API_ROOT)) { 'lingohunt.softthinkers.com' } else { $env:SOFTTHINKERS_API_ROOT }
+          $useInsecure = ($env:SOFTTHINKERS_ALLOW_INSECURE_FTPS -eq 'true')
+
+          if ($useInsecure) {
+            ./scripts/deploy-all.ps1 -Server $server -Port $port -Username $username -WebsiteRoot $websiteRoot -ApiRoot $apiRoot -AllowInsecureFtps
+          } else {
+            ./scripts/deploy-all.ps1 -Server $server -Port $port -Username $username -WebsiteRoot $websiteRoot -ApiRoot $apiRoot
+          }
 
       - name: Verify live website
         shell: pwsh

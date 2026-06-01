@@ -80,6 +80,12 @@ Required GitHub secrets:
 
 Recommended GitHub repository variables:
 
+- `SOFTTHINKERS_FTP_SERVER`
+- `SOFTTHINKERS_FTP_PORT`
+- `SOFTTHINKERS_FTP_USERNAME`
+- `SOFTTHINKERS_WEBSITE_ROOT`
+- `SOFTTHINKERS_API_ROOT`
+- `SOFTTHINKERS_ALLOW_INSECURE_FTPS`
 - `SOFTTHINKERS_DB_HOST`
 - `SOFTTHINKERS_DB_PORT`
 - `SOFTTHINKERS_DB_NAME`
@@ -90,6 +96,12 @@ Recommended GitHub repository variables:
 
 Default assumptions if variables are not set:
 
+- FTP server: `ftp.softthinkers.com`
+- FTP port: `21`
+- FTP username: `softthinkers`
+- website root: `public_html`
+- API root: `lingohunt.softthinkers.com`
+- allow insecure FTPS: `false`
 - DB host: `localhost`
 - DB port: `3306`
 - DB name: `softthinkers_lingohunt`
@@ -97,6 +109,13 @@ Default assumptions if variables are not set:
 - site URL: `https://softthinkers.com`
 - timezone: `Asia/Karachi`
 - lead storage: `database`
+
+If your hosting provider uses an FTPS certificate that does not match `ftp.softthinkers.com`, set:
+
+- `SOFTTHINKERS_FTP_SERVER` to the hostname that matches the certificate, or
+- `SOFTTHINKERS_ALLOW_INSECURE_FTPS=true` as a temporary workaround
+
+The better fix is to use the correct FTPS hostname. `SOFTTHINKERS_ALLOW_INSECURE_FTPS=true` disables certificate validation during FTP upload and should only be used when you cannot obtain the matching server hostname from the host.
 
 FTP deployment scripts:
 
