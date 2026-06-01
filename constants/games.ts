@@ -9,6 +9,62 @@ export interface CalmGameDefinition {
   colors: readonly [string, string];
 }
 
+// ─── Arcade games ─────────────────────────────────────────────────────────────
+
+export interface ArcadeGameDefinition {
+  id: 'snake' | 'bubble-pop' | 'jelly' | 'ball';
+  title: string;
+  subtitle: string;
+  emoji: string;
+  rewardXp: number;
+  rewardCoins: number;
+  colors: readonly [string, string];
+  route: string;
+}
+
+export const ARCADE_GAMES: ArcadeGameDefinition[] = [
+  {
+    id: 'snake',
+    title: 'Word Snake',
+    subtitle: 'Eat words, grow longer, learn Swedish & English!',
+    emoji: '🐍',
+    rewardXp: 25,
+    rewardCoins: 8,
+    colors: ['#1B5E20', '#388E3C'],
+    route: '/games/snake',
+  },
+  {
+    id: 'bubble-pop',
+    title: 'Bubble Burst',
+    subtitle: 'Pop the bubble that matches the word shown!',
+    emoji: '🫧',
+    rewardXp: 20,
+    rewardCoins: 6,
+    colors: ['#0277BD', '#29B6F6'],
+    route: '/games/bubble-pop',
+  },
+  {
+    id: 'jelly',
+    title: 'Jelly Pop',
+    subtitle: 'Whack the jelly that shows the right word!',
+    emoji: '🟢',
+    rewardXp: 18,
+    rewardCoins: 5,
+    colors: ['#6A1B9A', '#AB47BC'],
+    route: '/games/jelly',
+  },
+  {
+    id: 'ball',
+    title: 'Word Breakout',
+    subtitle: 'Break word blocks with your ball — collect them all!',
+    emoji: '🎱',
+    rewardXp: 22,
+    rewardCoins: 7,
+    colors: ['#E65100', '#FF8F00'],
+    route: '/games/ball',
+  },
+];
+
 export const CALM_GAMES: CalmGameDefinition[] = [
   {
     id: 'sound-safari',

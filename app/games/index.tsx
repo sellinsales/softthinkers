@@ -5,7 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button } from '../../components/ui/Button';
 import { Lumi } from '../../components/mascot/Lumi';
-import { CALM_GAMES } from '../../constants/games';
+import { CALM_GAMES, ARCADE_GAMES } from '../../constants/games';
 import { Colors, FontFamily, FontSize, Radius, Spacing, Shadow } from '../../constants/theme';
 
 export default function GamesHubScreen() {
@@ -43,6 +43,41 @@ export default function GamesHubScreen() {
             <Text style={styles.soundHint}>Recorded background audio can be added later using the same asset structure as the Islamic Corner.</Text>
           </View>
 
+          {/* ── Arcade Games ─────────────────────────────────────────── */}
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionEmoji}>⚡</Text>
+            <View>
+              <Text style={styles.sectionTitle}>Arcade Games</Text>
+              <Text style={styles.sectionSub}>Animated · Fast · Educational</Text>
+            </View>
+          </View>
+          <View style={styles.arcadeGrid}>
+            {ARCADE_GAMES.map((game) => (
+              <Pressable
+                key={game.id}
+                style={styles.arcadeCard}
+                onPress={() => router.push(game.route as never)}
+              >
+                <LinearGradient colors={game.colors} style={styles.arcadeGradient}>
+                  <Text style={styles.arcadeEmoji}>{game.emoji}</Text>
+                  <Text style={styles.arcadeTitle}>{game.title}</Text>
+                  <Text style={styles.arcadeSubtitle} numberOfLines={2}>{game.subtitle}</Text>
+                  <View style={styles.arcadeXP}>
+                    <Text style={styles.arcadeXPText}>+{game.rewardXp} XP</Text>
+                  </View>
+                </LinearGradient>
+              </Pressable>
+            ))}
+          </View>
+
+          {/* ── Calm Games ───────────────────────────────────────────── */}
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionEmoji}>🕊️</Text>
+            <View>
+              <Text style={styles.sectionTitle}>Calm Games</Text>
+              <Text style={styles.sectionSub}>Gentle · Mindful · Routine</Text>
+            </View>
+          </View>
           <View style={styles.gamesList}>
             {CALM_GAMES.map((game) => (
               <Pressable
@@ -152,5 +187,64 @@ const styles = StyleSheet.create({
     borderRadius: Radius.full,
     paddingHorizontal: Spacing.sm,
     paddingVertical: 6,
+  },
+
+  // ── Arcade section ──────────────────────────────────────────────────────────
+  sectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.sm,
+  },
+  sectionEmoji: { fontSize: 26 },
+  sectionTitle: {
+    fontFamily: FontFamily.black,
+    fontSize: FontSize.h4,
+    color: '#14305A',
+  },
+  sectionSub: {
+    fontFamily: FontFamily.medium,
+    fontSize: FontSize.xs,
+    color: Colors.textSecondary,
+  },
+  arcadeGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: Spacing.sm,
+  },
+  arcadeCard: {
+    width: '47.5%',
+    borderRadius: Radius.xl,
+    overflow: 'hidden',
+    ...Shadow.md,
+  },
+  arcadeGradient: {
+    padding: Spacing.base,
+    gap: 6,
+    minHeight: 140,
+    justifyContent: 'space-between',
+  },
+  arcadeEmoji: { fontSize: 36 },
+  arcadeTitle: {
+    fontFamily: FontFamily.black,
+    fontSize: FontSize.body,
+    color: '#FFF',
+  },
+  arcadeSubtitle: {
+    fontFamily: FontFamily.medium,
+    fontSize: FontSize.xs,
+    color: 'rgba(255,255,255,0.78)',
+    lineHeight: 17,
+  },
+  arcadeXP: {
+    alignSelf: 'flex-start',
+    backgroundColor: 'rgba(255,255,255,0.22)',
+    borderRadius: Radius.full,
+    paddingHorizontal: Spacing.sm,
+    paddingVertical: 4,
+  },
+  arcadeXPText: {
+    fontFamily: FontFamily.bold,
+    fontSize: FontSize.xs,
+    color: '#FFF',
   },
 });
