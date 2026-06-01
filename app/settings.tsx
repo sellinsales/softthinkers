@@ -109,6 +109,14 @@ export default function SettingsScreen() {
               </Text>
               <Text style={styles.version}>Version 1.0.0</Text>
             </View>
+            <Button
+              label="Request New Lessons or Games"
+              emoji="💡"
+              onPress={() => router.push('/feedback' as never)}
+              variant="secondary"
+              size="lg"
+              fullWidth
+            />
           </View>
 
           <View style={{ height: 100 }} />

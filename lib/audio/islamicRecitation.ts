@@ -31,7 +31,7 @@ export async function playIslamicRecitation(
   await stopIslamicAudio();
   await hapticLight();
 
-  if (audioUrl) {
+  if (audioUrl && isDirectAudioSource(audioUrl)) {
     const { sound } = await Audio.Sound.createAsync({ uri: audioUrl }, { shouldPlay: true });
     currentSound = sound;
     sound.setOnPlaybackStatusUpdate((status) => {
@@ -51,9 +51,21 @@ export async function playIslamicRecitation(
   });
 }
 
-export async function playGuidance(text: string): Promise<void> {
+export async function playGuidance(text: string, audioUrl?: string): Promise<void> {
   await stopIslamicAudio();
   await hapticLight();
+
+  if (audioUrl && isDirectAudioSource(audioUrl)) {
+    const { sound } = await Audio.Sound.createAsync({ uri: audioUrl }, { shouldPlay: true });
+    currentSound = sound;
+    sound.setOnPlaybackStatusUpdate((status) => {
+      if (status.isLoaded && status.didJustFinish) {
+        void stopCurrentSound();
+      }
+    });
+    return;
+  }
+
   Speech.speak(text, {
     language: 'en-US',
     pitch: 1,
@@ -61,3 +73,6 @@ export async function playGuidance(text: string): Promise<void> {
   });
 }
 
+function isDirectAudioSource(value: string): boolean {
+  return /^(https?:|file:)/i.test(value);
+}

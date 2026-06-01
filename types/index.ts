@@ -215,6 +215,9 @@ export interface IslamicModule {
   rewardCoins: number;
   unlockAfterId?: string;
   audioUrl?: string;
+  recitationAudio?: string;
+  meaningAudio?: string;
+  guidanceAudio?: string[];
   quiz: IslamicQuizQuestion[];
 }
 

@@ -3,6 +3,7 @@ import {
   View, Text, StyleSheet, ScrollView, Pressable, TextInput,
   KeyboardAvoidingView, Platform,
 } from 'react-native';
+import { router } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAppStore } from '../../stores/appStore';
@@ -246,6 +247,11 @@ export default function ParentDashboardScreen() {
                 label="Haptics"
                 value={settings.hapticEnabled ? '📳 On' : '📴 Off'}
                 onPress={() => updateSettings({ hapticEnabled: !settings.hapticEnabled })}
+              />
+              <SettingRow
+                label="Request New Content"
+                value="Titles, duas, calm games"
+                onPress={() => router.push('/feedback' as never)}
               />
               <SettingRow
                 label="Change PIN"

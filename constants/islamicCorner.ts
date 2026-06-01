@@ -23,6 +23,8 @@ export const ISLAMIC_MODULES: IslamicModule[] = [
     ],
     rewardXp: 10,
     rewardCoins: 2,
+    recitationAudio: 'assets/audio/islamic/duas/how-to-start.mp3',
+    meaningAudio: 'assets/audio/islamic/meanings/how-to-start.mp3',
     quiz: [
       {
         id: 'start-1',
@@ -62,6 +64,8 @@ export const ISLAMIC_MODULES: IslamicModule[] = [
     rewardXp: 15,
     rewardCoins: 3,
     unlockAfterId: 'how-to-start',
+    recitationAudio: 'assets/audio/islamic/duas/dua-before-eating.mp3',
+    meaningAudio: 'assets/audio/islamic/meanings/dua-before-eating.mp3',
     quiz: [
       {
         id: 'eat-1',
@@ -112,6 +116,8 @@ export const ISLAMIC_MODULES: IslamicModule[] = [
     rewardXp: 18,
     rewardCoins: 3,
     unlockAfterId: 'dua-before-eating',
+    recitationAudio: 'assets/audio/islamic/duas/dua-before-sleep.mp3',
+    meaningAudio: 'assets/audio/islamic/meanings/dua-before-sleep.mp3',
     quiz: [
       {
         id: 'sleep-1',
@@ -151,6 +157,15 @@ export const ISLAMIC_MODULES: IslamicModule[] = [
     rewardXp: 22,
     rewardCoins: 4,
     unlockAfterId: 'dua-before-sleep',
+    guidanceAudio: [
+      'assets/audio/islamic/guides/wudu-steps-1.mp3',
+      'assets/audio/islamic/guides/wudu-steps-2.mp3',
+      'assets/audio/islamic/guides/wudu-steps-3.mp3',
+      'assets/audio/islamic/guides/wudu-steps-4.mp3',
+      'assets/audio/islamic/guides/wudu-steps-5.mp3',
+      'assets/audio/islamic/guides/wudu-steps-6.mp3',
+      'assets/audio/islamic/guides/wudu-steps-7.mp3',
+    ],
     quiz: [
       {
         id: 'wudu-1',
@@ -198,6 +213,12 @@ export const ISLAMIC_MODULES: IslamicModule[] = [
     rewardXp: 14,
     rewardCoins: 2,
     unlockAfterId: 'how-to-start',
+    guidanceAudio: [
+      'assets/audio/islamic/guides/salam-and-kindness-1.mp3',
+      'assets/audio/islamic/guides/salam-and-kindness-2.mp3',
+      'assets/audio/islamic/guides/salam-and-kindness-3.mp3',
+      'assets/audio/islamic/guides/salam-and-kindness-4.mp3',
+    ],
     quiz: [
       {
         id: 'salam-1',
@@ -219,4 +240,3 @@ export const ISLAMIC_CATEGORY_LABELS: Record<IslamicModule['category'], string> 
   salah_basics: 'Salah Basics',
   manners: 'Islamic Manners',
 };
-

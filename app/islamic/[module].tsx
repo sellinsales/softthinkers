@@ -82,7 +82,7 @@ export default function IslamicModuleScreen() {
                 <Button
                   label="Play recitation"
                   emoji="🔊"
-                  onPress={() => void playIslamicRecitation(activeLesson.arabic ?? '', activeLesson.transliteration ?? '', activeLesson.audioUrl)}
+                  onPress={() => void playIslamicRecitation(activeLesson.arabic ?? '', activeLesson.transliteration ?? '', activeLesson.recitationAudio)}
                   variant="primary"
                   size="lg"
                   fullWidth
@@ -91,7 +91,7 @@ export default function IslamicModuleScreen() {
                   <Button
                     label="Play meaning"
                     emoji="🗣️"
-                    onPress={() => void playGuidance(activeLesson.meaning ?? '')}
+                    onPress={() => void playGuidance(activeLesson.meaning ?? '', activeLesson.meaningAudio)}
                     variant="ghost"
                     size="lg"
                     fullWidth
@@ -117,7 +117,13 @@ export default function IslamicModuleScreen() {
                     <View style={styles.stepDot}>
                       <Text style={styles.stepDotText}>{index + 1}</Text>
                     </View>
-                    <Text style={styles.listText}>{item}</Text>
+                    <Pressable
+                      style={styles.stepAudioWrap}
+                      onPress={() => void playGuidance(item, activeLesson.guidanceAudio?.[index])}
+                    >
+                      <Text style={styles.listText}>{item}</Text>
+                      <Text style={styles.stepPlayText}>Tap to hear</Text>
+                    </Pressable>
                   </View>
                 ))}
               </View>
@@ -303,6 +309,10 @@ const styles = StyleSheet.create({
     gap: Spacing.sm,
     alignItems: 'flex-start',
   },
+  stepAudioWrap: {
+    flex: 1,
+    gap: 4,
+  },
   stepDot: {
     width: 28,
     height: 28,
@@ -317,11 +327,15 @@ const styles = StyleSheet.create({
     color: '#0E7B56',
   },
   listText: {
-    flex: 1,
     fontFamily: FontFamily.medium,
     fontSize: FontSize.body,
     color: Colors.textSecondary,
     lineHeight: 22,
+  },
+  stepPlayText: {
+    fontFamily: FontFamily.bold,
+    fontSize: FontSize.xs,
+    color: Colors.primaryDark,
   },
   tipList: {
     gap: Spacing.sm,
