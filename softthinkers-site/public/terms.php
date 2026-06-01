@@ -44,6 +44,13 @@ softthinkers_render_page('Terms of Service', 'contact', static function (array $
         </p>
       </article>
       <article class="legal-panel">
+        <h2>Account and Data Requests</h2>
+        <p>
+          Users who need support with an app account, stored profile data, or a deletion request can use the
+          <a href="support.php">Support page</a> or the public <a href="delete-account.php">Delete Account / Data Request page</a>.
+        </p>
+      </article>
+      <article class="legal-panel">
         <h2>Contact</h2>
         <p>
           Questions about these terms can be directed through <a href="contact.php">the contact page</a>.

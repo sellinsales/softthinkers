@@ -930,6 +930,35 @@ img {
   margin-bottom: 10px;
 }
 
+.link-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+.link-card {
+  border-radius: var(--radius-lg);
+  background: var(--surface-strong);
+  border: 1px solid var(--line);
+  box-shadow: 0 16px 38px rgba(35, 86, 190, 0.08);
+  padding: 24px;
+}
+
+.link-card h3 {
+  margin: 10px 0 12px;
+  font-size: 1.35rem;
+}
+
+.link-card p {
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.link-card .button-primary,
+.link-card .button-secondary {
+  margin-top: 16px;
+}
+
 .lead-form {
   margin-top: 18px;
 }

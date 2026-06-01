@@ -404,6 +404,16 @@ return [
             ],
         ],
         [
+            'title' => 'App Support',
+            'links' => [
+                ['label' => 'LingoHunt App Page', 'href' => 'app-lingohunt.php'],
+                ['label' => 'Support', 'href' => 'support.php'],
+                ['label' => 'Privacy Policy', 'href' => 'privacy-policy.php'],
+                ['label' => 'Terms of Service', 'href' => 'terms.php'],
+                ['label' => 'Delete Account', 'href' => 'delete-account.php'],
+            ],
+        ],
+        [
             'title' => 'Contact',
             'links' => [
                 ['label' => 'sales@softthinkers.com', 'href' => 'mailto:sales@softthinkers.com'],

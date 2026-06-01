@@ -55,5 +55,35 @@ softthinkers_render_page('LingoHunt', 'products', static function (array $conten
         </ul>
       </div>
     </section>
+
+    <section class="section-block">
+      <?php softthinkers_section_heading('Public App Links', 'Support, privacy, and deletion resources', 'These public pages are the main reviewer-facing and user-facing links for Play Store onboarding and ongoing app support.'); ?>
+      <div class="link-grid">
+        <article class="link-card">
+          <p class="eyebrow">Support</p>
+          <h3>App help and account questions</h3>
+          <p>Public support page for feature questions, account issues, and general app guidance.</p>
+          <a class="button-secondary" href="support.php">Open Support</a>
+        </article>
+        <article class="link-card">
+          <p class="eyebrow">Privacy</p>
+          <h3>Privacy policy</h3>
+          <p>Public privacy page covering data use, family-oriented products, and contact details.</p>
+          <a class="button-secondary" href="privacy-policy.php">View Privacy Policy</a>
+        </article>
+        <article class="link-card">
+          <p class="eyebrow">Terms</p>
+          <h3>Terms of service</h3>
+          <p>General service terms for websites, apps, support flows, and product usage.</p>
+          <a class="button-secondary" href="terms.php">View Terms</a>
+        </article>
+        <article class="link-card">
+          <p class="eyebrow">Deletion</p>
+          <h3>Delete account and data</h3>
+          <p>Public request page that users can use to ask for account deletion and removal of associated data.</p>
+          <a class="button-primary" href="delete-account.php">Request Deletion</a>
+        </article>
+      </div>
+    </section>
     <?php
 });

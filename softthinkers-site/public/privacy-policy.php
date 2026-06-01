@@ -45,6 +45,14 @@ softthinkers_render_page('Privacy Policy', 'contact', static function (array $co
         </p>
       </article>
       <article class="legal-panel">
+        <h2>Account Deletion Requests</h2>
+        <p>
+          If a user wants to request deletion of an app account or associated data, they can use the public
+          <a href="delete-account.php">Delete Account / Data Request page</a>. That page provides both a direct request route and
+          the details needed to identify the account correctly.
+        </p>
+      </article>
+      <article class="legal-panel">
         <h2>Data Sharing</h2>
         <p>
           We do not position personal data as something to sell. Information may be processed through service providers,

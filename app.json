@@ -30,7 +30,7 @@
         "backgroundColor": "#FFF9F0"
       },
       "package": "com.lingohunt.app",
-      "versionCode": 1,
+      "versionCode": 2,
       "permissions": [
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO",
@@ -73,7 +73,11 @@
       "firebaseStorageBucket": "lingohunt-3bde2.firebasestorage.app",
       "firebaseMessagingSenderId": "1026872790378",
       "firebaseAppId": "1:1026872790378:android:c37315219b73b0eab4a913",
-      "googleVisionApiKey": "AIzaSyBmVUhM8yHi50MLBhVL4XVT1VUUPnJP0pI"
+      "googleVisionApiKey": "AIzaSyBmVUhM8yHi50MLBhVL4XVT1VUUPnJP0pI",
+      "router": {},
+      "eas": {
+        "projectId": "942fbf9f-f8b6-4066-9492-06dc0e112553"
+      }
     }
   }
 }
