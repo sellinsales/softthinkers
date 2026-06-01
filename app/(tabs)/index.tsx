@@ -138,6 +138,27 @@ export default function HomeScreen() {
 
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
+              <Text style={styles.sectionTitle}>Calm Games</Text>
+              <Pressable onPress={() => router.push('/games' as never)}>
+                <Text style={styles.linkText}>Open hub</Text>
+              </Pressable>
+            </View>
+            <View style={styles.gamesStrip}>
+              <Pressable style={[styles.gamePreviewCard, styles.gamePreviewBlue]} onPress={() => router.push({ pathname: '/games/[game]' as never, params: { game: 'sound-safari' } } as never)}>
+                <Text style={styles.gamePreviewEmoji}>🕊️</Text>
+                <Text style={styles.gamePreviewTitle}>Sound Safari</Text>
+                <Text style={styles.gamePreviewText}>Match nature scenes with calm sounds.</Text>
+              </Pressable>
+              <Pressable style={[styles.gamePreviewCard, styles.gamePreviewGold]} onPress={() => router.push({ pathname: '/games/[game]' as never, params: { game: 'wudu-order' } } as never)}>
+                <Text style={styles.gamePreviewEmoji}>💧</Text>
+                <Text style={styles.gamePreviewTitle}>Wudu Order</Text>
+                <Text style={styles.gamePreviewText}>Practice the steps gently in sequence.</Text>
+              </Pressable>
+            </View>
+          </View>
+
+          <View style={styles.section}>
+            <View style={styles.sectionHeader}>
               <Text style={styles.sectionTitle}>Treasure Trail</Text>
               <Text style={styles.sectionMeta}>{completedCount}/{totalCount} missions</Text>
             </View>
@@ -464,6 +485,41 @@ const styles = StyleSheet.create({
     color: '#15335D',
   },
   guideText: {
+    fontFamily: FontFamily.medium,
+    fontSize: FontSize.small,
+    lineHeight: 20,
+    color: Colors.textSecondary,
+  },
+  gamesStrip: {
+    flexDirection: 'row',
+    gap: Spacing.sm,
+  },
+  gamePreviewCard: {
+    flex: 1,
+    borderRadius: Radius.xl,
+    padding: Spacing.base,
+    gap: 6,
+    ...Shadow.sm,
+  },
+  gamePreviewBlue: {
+    backgroundColor: '#E9F7FF',
+    borderWidth: 1,
+    borderColor: '#CCE5F5',
+  },
+  gamePreviewGold: {
+    backgroundColor: '#FFF5D7',
+    borderWidth: 1,
+    borderColor: '#F4E0A2',
+  },
+  gamePreviewEmoji: {
+    fontSize: 28,
+  },
+  gamePreviewTitle: {
+    fontFamily: FontFamily.extraBold,
+    fontSize: FontSize.body,
+    color: '#15335D',
+  },
+  gamePreviewText: {
     fontFamily: FontFamily.medium,
     fontSize: FontSize.small,
     lineHeight: 20,
