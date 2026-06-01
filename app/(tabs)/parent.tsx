@@ -6,6 +6,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAppStore } from '../../stores/appStore';
+import { useIslamicCorner } from '../../hooks/useIslamicCorner';
 import { Button } from '../../components/ui/Button';
 import { VOCABULARY, CATEGORIES } from '../../constants/vocabulary';
 import {
@@ -17,6 +18,7 @@ const DEFAULT_PIN = '1234';
 
 export default function ParentDashboardScreen() {
   const { profile, stats, learnedWords, settings, updateSettings } = useAppStore();
+  const { progress: islamicProgress } = useIslamicCorner();
   const [unlocked, setUnlocked] = useState(false);
   const [pin, setPin] = useState('');
   const [error, setError] = useState('');
@@ -159,6 +161,24 @@ export default function ParentDashboardScreen() {
                 { label: 'Total Scans', value: stats.totalScans, emoji: '📸' },
                 { label: 'Total XP', value: stats.totalXp, emoji: '⭐' },
                 { label: 'Missions Done', value: stats.missionsCompleted, emoji: '✅' },
+              ].map((s) => (
+                <View key={s.label} style={styles.statGridItem}>
+                  <Text style={styles.statGridEmoji}>{s.emoji}</Text>
+                  <Text style={styles.statGridVal}>{s.value}</Text>
+                  <Text style={styles.statGridLab}>{s.label}</Text>
+                </View>
+              ))}
+            </View>
+          </View>
+
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>🌙 Islamic Corner</Text>
+            <View style={styles.statsGrid}>
+              {[
+                { label: 'Lessons Done', value: islamicProgress.completedModuleIds.length, emoji: '✅' },
+                { label: 'Islamic Stars', value: islamicProgress.stars, emoji: '⭐' },
+                { label: 'Islamic Streak', value: `${islamicProgress.streak}d`, emoji: '🔥' },
+                { label: 'Last Lesson', value: islamicProgress.lastCompletedDate ? format(new Date(islamicProgress.lastCompletedDate), 'MMM d') : 'None', emoji: '🗓️' },
               ].map((s) => (
                 <View key={s.label} style={styles.statGridItem}>
                   <Text style={styles.statGridEmoji}>{s.emoji}</Text>

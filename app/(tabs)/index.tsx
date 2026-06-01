@@ -120,6 +120,24 @@ export default function HomeScreen() {
 
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
+              <Text style={styles.sectionTitle}>Guided Learning</Text>
+            </View>
+            <View style={styles.guidedRow}>
+              <Pressable style={styles.guideCard} onPress={() => router.push('/(tabs)/islamic')}>
+                <Text style={styles.guideEmoji}>🌙</Text>
+                <Text style={styles.guideTitle}>Islamic Corner</Text>
+                <Text style={styles.guideText}>Learn duas, manners, and prayer basics with audio and quizzes.</Text>
+              </Pressable>
+              <Pressable style={styles.guideCard} onPress={() => router.push('/how-to-use')}>
+                <Text style={styles.guideEmoji}>🧭</Text>
+                <Text style={styles.guideTitle}>How To Use</Text>
+                <Text style={styles.guideText}>A simple guide for children and parents to use the app well.</Text>
+              </Pressable>
+            </View>
+          </View>
+
+          <View style={styles.section}>
+            <View style={styles.sectionHeader}>
               <Text style={styles.sectionTitle}>Treasure Trail</Text>
               <Text style={styles.sectionMeta}>{completedCount}/{totalCount} missions</Text>
             </View>
@@ -422,6 +440,34 @@ const styles = StyleSheet.create({
     fontSize: FontSize.small,
     lineHeight: 20,
     color: '#7B6630',
+  },
+  guidedRow: {
+    flexDirection: 'row',
+    gap: Spacing.sm,
+  },
+  guideCard: {
+    flex: 1,
+    backgroundColor: Colors.surface,
+    borderRadius: Radius.xl,
+    padding: Spacing.base,
+    gap: 6,
+    borderWidth: 1,
+    borderColor: '#E4EDF7',
+    ...Shadow.sm,
+  },
+  guideEmoji: {
+    fontSize: 26,
+  },
+  guideTitle: {
+    fontFamily: FontFamily.extraBold,
+    fontSize: FontSize.body,
+    color: '#15335D',
+  },
+  guideText: {
+    fontFamily: FontFamily.medium,
+    fontSize: FontSize.small,
+    lineHeight: 20,
+    color: Colors.textSecondary,
   },
   section: { gap: Spacing.sm },
   sectionHeader: {

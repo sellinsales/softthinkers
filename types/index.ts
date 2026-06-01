@@ -179,3 +179,49 @@ export interface AppState {
   isLoading: boolean;
   isOnline: boolean;
 }
+
+// Islamic Corner
+export type IslamicModuleType = 'dua' | 'guide' | 'quiz';
+
+export interface IslamicQuizOption {
+  id: string;
+  text: string;
+}
+
+export interface IslamicQuizQuestion {
+  id: string;
+  prompt: string;
+  options: IslamicQuizOption[];
+  correctOptionId: string;
+  explanation: string;
+}
+
+export interface IslamicModule {
+  id: string;
+  type: IslamicModuleType;
+  category: 'daily_duas' | 'salah_basics' | 'manners';
+  title: string;
+  subtitle: string;
+  emoji: string;
+  objective: string;
+  ageBand: '4-6' | '6-8' | '8-10';
+  arabic?: string;
+  transliteration?: string;
+  meaning?: string;
+  guidance?: string[];
+  tips?: string[];
+  whenToUse?: string;
+  rewardXp: number;
+  rewardCoins: number;
+  unlockAfterId?: string;
+  audioUrl?: string;
+  quiz: IslamicQuizQuestion[];
+}
+
+export interface IslamicProgress {
+  completedModuleIds: string[];
+  quizScores: Record<string, number>;
+  stars: number;
+  streak: number;
+  lastCompletedDate: string | null;
+}

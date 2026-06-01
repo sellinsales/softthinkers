@@ -58,6 +58,15 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
+        name="islamic"
+        options={{
+          title: 'Islamic',
+          tabBarIcon: ({ focused }) => (
+            <TabIcon emoji="🌙" label="Islamic" focused={focused} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="parent"
         options={{
           title: 'Parent',
@@ -82,7 +91,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 6,
-    paddingHorizontal: 14,
+    paddingHorizontal: 10,
     borderRadius: Radius.lg,
     gap: 2,
   },
@@ -90,7 +99,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary + '20',
   },
   tabEmoji: {
-    fontSize: 26,
+    fontSize: 24,
     opacity: 0.55,
   },
   tabEmojiActive: {
@@ -105,3 +114,4 @@ const styles = StyleSheet.create({
     color: Colors.primary,
   },
 });
+

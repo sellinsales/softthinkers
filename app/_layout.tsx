@@ -68,6 +68,8 @@ export default function RootLayout() {
           <Stack.Screen name="index" />
           <Stack.Screen name="onboarding" options={{ animation: 'slide_from_right' }} />
           <Stack.Screen name="(tabs)" options={{ animation: 'fade' }} />
+          <Stack.Screen name="how-to-use" options={{ animation: 'slide_from_right' }} />
+          <Stack.Screen name="islamic/[module]" options={{ animation: 'slide_from_right' }} />
           <Stack.Screen
             name="learning/[word]"
             options={{ animation: 'slide_from_bottom', presentation: 'modal' }}

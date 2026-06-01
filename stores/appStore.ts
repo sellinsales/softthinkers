@@ -71,6 +71,7 @@ interface AppStore extends AppState {
   // Missions
   loadDailyMissions: (uid: string) => Promise<void>;
   completeMission: (missionId: string) => Promise<void>;
+  awardBonus: (xp: number, coins: number) => Promise<void>;
 
   // UI helpers
   setLoading: (loading: boolean) => void;
@@ -295,6 +296,33 @@ export const useAppStore = create<AppStore>((set, get) => ({
       ]);
     } catch {
       // offline or API unavailable
+    }
+  },
+
+  awardBonus: async (xp: number, coins: number) => {
+    const { profile, stats, settings } = get();
+    if (!profile) return;
+
+    const nextStats: UserStats = {
+      ...stats,
+      totalXp: stats.totalXp + xp,
+      level: xpToLevel(stats.totalXp + xp),
+      coinsEarned: stats.coinsEarned + coins,
+    };
+
+    set({ stats: nextStats });
+
+    await cacheUserDoc(profile.uid, {
+      profile,
+      stats: nextStats,
+      settings,
+      updatedAt: new Date().toISOString(),
+    });
+
+    try {
+      await updateUserStats(profile.uid, nextStats);
+    } catch {
+      // local state already updated
     }
   },
 
