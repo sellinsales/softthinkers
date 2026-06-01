@@ -50,6 +50,7 @@ export default function GamesHubScreen() {
                 style={styles.gameCard}
                 onPress={() => router.push({ pathname: '/games/[game]' as never, params: { game: game.id } } as never)}
               >
+                <LinearGradient colors={game.colors} style={styles.gameCardInner}>
                 <View style={styles.gameTop}>
                   <Text style={styles.gameEmoji}>{game.emoji}</Text>
                   <View style={styles.rewardPill}>
@@ -63,6 +64,7 @@ export default function GamesHubScreen() {
                     {game.mood === 'calm' ? 'Calm listening' : game.mood === 'routine' ? 'Routine practice' : 'Gentle thinking'}
                   </Text>
                 </View>
+                </LinearGradient>
               </Pressable>
             ))}
           </View>
@@ -120,13 +122,15 @@ const styles = StyleSheet.create({
   soundHint: { fontFamily: FontFamily.medium, fontSize: FontSize.xs, color: Colors.textSecondary, lineHeight: 18 },
   gamesList: { gap: Spacing.sm },
   gameCard: {
-    backgroundColor: Colors.surface,
     borderRadius: Radius.xl,
+    overflow: 'hidden',
+    ...Shadow.sm,
+  },
+  gameCardInner: {
     padding: Spacing.base,
     gap: Spacing.sm,
     borderWidth: 1,
     borderColor: '#E4EDF7',
-    ...Shadow.sm,
   },
   gameTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   gameEmoji: { fontSize: 34 },

@@ -9,7 +9,7 @@ import { XPPop } from '../../components/ui/XPBar';
 import { Colors, FontFamily, FontSize, Radius, Spacing, Shadow } from '../../constants/theme';
 import { useAppStore } from '../../stores/appStore';
 
-type GameId = 'sound-safari' | 'wudu-order' | 'habit-match';
+type GameId = 'sound-safari' | 'wudu-order' | 'habit-match' | 'bedtime-calm';
 
 const SOUND_SAFARI_ROUNDS = [
   { id: 'forest', scene: 'A quiet forest in the morning', emoji: '🌳', correct: 'birds', options: ['birds', 'traffic', 'alarm'] },
@@ -50,6 +50,13 @@ const HABIT_MATCH_ROUNDS = [
   },
 ] as const;
 
+const BEDTIME_STEPS = [
+  'Put toys away',
+  'Wash up and get ready',
+  'Say the bedtime dua',
+  'Lie down calmly',
+] as const;
+
 export default function CalmGameScreen() {
   const { game } = useLocalSearchParams<{ game: GameId }>();
   const awardBonus = useAppStore((state) => state.awardBonus);
@@ -59,6 +66,7 @@ export default function CalmGameScreen() {
   const [wuduProgress, setWuduProgress] = useState<string[]>([]);
   const [habitRound, setHabitRound] = useState(0);
   const [habitScore, setHabitScore] = useState(0);
+  const [bedtimeProgress, setBedtimeProgress] = useState<string[]>([]);
   const [rewardVisible, setRewardVisible] = useState(false);
   const [completed, setCompleted] = useState(false);
 
@@ -87,10 +95,7 @@ export default function CalmGameScreen() {
     setSoundScore(nextScore);
     if (nextRound >= SOUND_SAFARI_ROUNDS.length) {
       void finishGame();
-      Alert.alert(
-        'Sound Safari complete',
-        `You matched ${nextScore + (choice === current.correct ? 0 : 0)} out of ${SOUND_SAFARI_ROUNDS.length} calm scenes.`,
-      );
+      Alert.alert('Sound Safari complete', `You matched ${nextScore} out of ${SOUND_SAFARI_ROUNDS.length} calm scenes.`);
       return;
     }
     setSoundRound(nextRound);
@@ -124,8 +129,23 @@ export default function CalmGameScreen() {
     setHabitRound(nextRound);
   }
 
+  function handleBedtimeStep(step: string) {
+    const expected = BEDTIME_STEPS[bedtimeProgress.length];
+    if (step !== expected) {
+      Alert.alert('Almost', 'Try the step that comes next in a peaceful bedtime routine.');
+      return;
+    }
+
+    const next = [...bedtimeProgress, step];
+    setBedtimeProgress(next);
+    if (next.length === BEDTIME_STEPS.length) {
+      void finishGame();
+      Alert.alert('Bedtime routine complete', 'That was a calm and beautiful bedtime flow.');
+    }
+  }
+
   return (
-    <LinearGradient colors={['#F6FDFF', '#FFF9F0']} style={styles.gradient}>
+    <LinearGradient colors={activeGame.colors} style={styles.gradient}>
       <SafeAreaView style={styles.safe} edges={['top']}>
         <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
           <XPPop amount={activeGame.rewardXp} visible={rewardVisible} />
@@ -137,7 +157,10 @@ export default function CalmGameScreen() {
             <View style={{ width: 64 }} />
           </View>
 
-          <View style={styles.heroCard}>
+          <View style={styles.heroScene}>
+            <View style={styles.heroGlow} />
+            <Text style={styles.heroEmoji}>{activeGame.emoji}</Text>
+            <Text style={styles.heroTitle}>{activeGame.title}</Text>
             <Text style={styles.heroSubtitle}>{activeGame.subtitle}</Text>
             <View style={styles.calmRow}>
               <Text style={styles.calmPill}>Slow play</Text>
@@ -208,12 +231,49 @@ export default function CalmGameScreen() {
             </View>
           )}
 
+          {activeGame.id === 'bedtime-calm' && (
+            <View style={styles.card}>
+              <Text style={styles.roundLabel}>Build the calm bedtime path</Text>
+              <Text style={styles.bigEmoji}>🌙</Text>
+              <Text style={styles.promptTitle}>Put the bedtime routine in the best order.</Text>
+              <Text style={styles.promptHint}>A gentle evening routine helps children feel secure, calm, and ready for sleep.</Text>
+              <View style={styles.progressWrap}>
+                {bedtimeProgress.map((step, index) => (
+                  <View key={step} style={[styles.progressChip, styles.bedtimeChip]}>
+                    <Text style={styles.progressChipText}>{index + 1}. {step}</Text>
+                  </View>
+                ))}
+              </View>
+              <View style={styles.optionList}>
+                {BEDTIME_STEPS.map((step) => (
+                  <Pressable
+                    key={step}
+                    style={[styles.optionButton, bedtimeProgress.includes(step) && styles.optionDisabled]}
+                    onPress={() => handleBedtimeStep(step)}
+                    disabled={bedtimeProgress.includes(step)}
+                  >
+                    <Text style={styles.optionText}>{step}</Text>
+                  </Pressable>
+                ))}
+              </View>
+            </View>
+          )}
+
           <View style={styles.infoCard}>
             <Text style={styles.infoTitle}>Why this game matters</Text>
             <Text style={styles.infoText}>
               These games are designed to support calm attention, daily routines, manners, observation, and real-life recall instead of overstimulating puzzle pressure.
             </Text>
           </View>
+
+          <Button
+            label="See all games"
+            emoji="🎮"
+            onPress={() => router.push('/games' as never)}
+            variant="secondary"
+            size="lg"
+            fullWidth
+          />
         </ScrollView>
       </SafeAreaView>
     </LinearGradient>
@@ -242,15 +302,27 @@ const styles = StyleSheet.create({
   backButton: { paddingVertical: Spacing.sm, paddingRight: Spacing.md },
   backText: { fontFamily: FontFamily.bold, fontSize: FontSize.body, color: Colors.primaryDark },
   headerTitle: { fontFamily: FontFamily.black, fontSize: FontSize.h4, color: '#15335D', textAlign: 'center', flex: 1 },
-  heroCard: {
-    backgroundColor: Colors.surface,
+  heroScene: {
+    backgroundColor: 'rgba(255,255,255,0.72)',
     borderRadius: Radius.xxl,
     padding: Spacing.xl,
+    alignItems: 'center',
     gap: Spacing.sm,
+    overflow: 'hidden',
     ...Shadow.md,
   },
-  heroSubtitle: { fontFamily: FontFamily.medium, fontSize: FontSize.body, lineHeight: 24, color: Colors.textSecondary },
-  calmRow: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.sm },
+  heroGlow: {
+    position: 'absolute',
+    width: 220,
+    height: 220,
+    borderRadius: 110,
+    top: -40,
+    backgroundColor: 'rgba(255,255,255,0.45)',
+  },
+  heroEmoji: { fontSize: 50 },
+  heroTitle: { fontFamily: FontFamily.black, fontSize: FontSize.h2, color: '#14355D', textAlign: 'center' },
+  heroSubtitle: { fontFamily: FontFamily.medium, fontSize: FontSize.body, lineHeight: 24, color: Colors.textSecondary, textAlign: 'center' },
+  calmRow: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.sm, justifyContent: 'center' },
   calmPill: {
     fontFamily: FontFamily.bold,
     fontSize: FontSize.xs,
@@ -291,6 +363,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#F4E3A6',
   },
+  bedtimeChip: {
+    backgroundColor: '#F1EBFF',
+    borderColor: '#D9CDF8',
+  },
   progressChipText: { fontFamily: FontFamily.bold, fontSize: FontSize.small, color: '#72570B' },
   infoCard: {
     backgroundColor: '#EEF9FF',
@@ -303,3 +379,4 @@ const styles = StyleSheet.create({
   infoTitle: { fontFamily: FontFamily.extraBold, fontSize: FontSize.body, color: '#17345F' },
   infoText: { fontFamily: FontFamily.medium, fontSize: FontSize.small, lineHeight: 22, color: Colors.textSecondary },
 });
+

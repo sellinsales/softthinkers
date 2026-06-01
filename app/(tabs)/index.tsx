@@ -155,6 +155,13 @@ export default function HomeScreen() {
                 <Text style={styles.gamePreviewText}>Practice the steps gently in sequence.</Text>
               </Pressable>
             </View>
+            <Pressable style={[styles.gameBanner, styles.gameBannerNight]} onPress={() => router.push({ pathname: '/games/[game]' as never, params: { game: 'bedtime-calm' } } as never)}>
+              <Text style={styles.gameBannerEmoji}>🌙</Text>
+              <View style={styles.gameBannerCopy}>
+                <Text style={styles.gameBannerTitle}>Bedtime Calm Routine</Text>
+                <Text style={styles.gameBannerText}>Build a peaceful bedtime flow with tidy-up, washing up, dua, and calm rest.</Text>
+              </View>
+            </Pressable>
           </View>
 
           <View style={styles.section}>
@@ -520,6 +527,37 @@ const styles = StyleSheet.create({
     color: '#15335D',
   },
   gamePreviewText: {
+    fontFamily: FontFamily.medium,
+    fontSize: FontSize.small,
+    lineHeight: 20,
+    color: Colors.textSecondary,
+  },
+  gameBanner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.base,
+    borderRadius: Radius.xl,
+    padding: Spacing.base,
+    ...Shadow.sm,
+  },
+  gameBannerNight: {
+    backgroundColor: '#EDE6FF',
+    borderWidth: 1,
+    borderColor: '#D8C9FA',
+  },
+  gameBannerEmoji: {
+    fontSize: 30,
+  },
+  gameBannerCopy: {
+    flex: 1,
+    gap: 4,
+  },
+  gameBannerTitle: {
+    fontFamily: FontFamily.extraBold,
+    fontSize: FontSize.body,
+    color: '#15335D',
+  },
+  gameBannerText: {
     fontFamily: FontFamily.medium,
     fontSize: FontSize.small,
     lineHeight: 20,
