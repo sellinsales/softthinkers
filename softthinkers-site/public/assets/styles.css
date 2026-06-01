@@ -796,13 +796,17 @@ img {
 }
 
 .footer-bottom p,
-.footer-meta span {
+.footer-meta a {
   color: rgba(255, 255, 255, 0.62);
 }
 
 .footer-meta {
   display: flex;
   gap: 16px;
+}
+
+.footer-meta a:hover {
+  color: white;
 }
 
 .page-hero,
@@ -864,6 +868,68 @@ img {
   color: var(--muted);
 }
 
+.app-hero {
+  display: grid;
+  grid-template-columns: 1fr 0.9fr;
+  gap: 18px;
+  align-items: stretch;
+}
+
+.app-summary-card,
+.legal-panel {
+  border-radius: var(--radius-lg);
+  background: var(--surface-strong);
+  border: 1px solid var(--line);
+  box-shadow: 0 16px 38px rgba(35, 86, 190, 0.08);
+  padding: 28px;
+}
+
+.app-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 112px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: white;
+}
+
+.app-badge.theme-violet { background: linear-gradient(135deg, #7f59ff, #b44dff); }
+.app-badge.theme-navy { background: linear-gradient(135deg, #102451, #193d8e); }
+.app-badge.theme-gold { background: linear-gradient(135deg, #ffb818, #f29c12); }
+
+.app-summary-card h2,
+.legal-panel h2 {
+  margin: 14px 0 12px;
+  font-size: 2rem;
+  letter-spacing: -0.03em;
+}
+
+.app-summary-card p,
+.legal-panel p,
+.legal-panel li {
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.legal-stack {
+  display: grid;
+  gap: 18px;
+}
+
+.legal-panel ul {
+  margin: 14px 0 0;
+  padding-left: 18px;
+}
+
+.legal-panel li {
+  margin-bottom: 10px;
+}
+
 .lead-form {
   margin-top: 18px;
 }
@@ -923,6 +989,7 @@ img {
 
 @media (max-width: 1180px) {
   .hero-surface,
+  .app-hero,
   .trust-layout,
   .pricing-layout,
   .split-layout {
@@ -961,10 +1028,13 @@ img {
 
   .site-header,
   .hero-surface,
+  .app-summary-card,
   .section-block,
   .site-footer,
   .page-hero,
-  .contact-panel {
+  .contact-panel,
+  .info-panel,
+  .legal-panel {
     padding: 22px;
     border-radius: 24px;
   }

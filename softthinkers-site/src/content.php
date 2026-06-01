@@ -97,21 +97,21 @@ return [
             'type' => 'Ride Hailing Platform',
             'text' => 'A rider, driver, and dispatch-ready mobility product designed for dependable bookings and daily operations.',
             'theme' => 'navy',
-            'href' => 'contact.php',
+            'href' => 'app-786rides.php',
         ],
         [
             'title' => 'OnWayRides',
             'type' => 'Travel App',
             'text' => 'A clean mobile-first transport product for practical trip booking, local travel, and rider convenience.',
             'theme' => 'gold',
-            'href' => 'contact.php',
+            'href' => 'app-onwayrides.php',
         ],
         [
             'title' => 'Kids Learning Games',
             'type' => 'Educational Products',
             'text' => 'Interactive learning games built to engage children through curiosity, repetition, and positive progression.',
             'theme' => 'violet',
-            'href' => 'contact.php',
+            'href' => 'app-lingohunt.php',
         ],
         [
             'title' => 'Parenting & Growth Guides',
@@ -143,6 +143,98 @@ return [
             'icon' => 'BP',
             'title' => 'Business Platforms',
             'text' => 'Operational platforms, booking systems, market-driven solutions, and custom software aligned to business workflows.',
+        ],
+    ],
+    'apps' => [
+        'lingohunt' => [
+            'eyebrow' => 'Kids Learning App',
+            'title' => 'LingoHunt',
+            'subtitle' => 'A playful object-learning experience for children built around curiosity, progression, and parent-friendly learning goals.',
+            'theme' => 'violet',
+            'storeCta' => 'Contact for Launch Updates',
+            'features' => [
+                [
+                    'icon' => 'CV',
+                    'title' => 'Object Discovery',
+                    'text' => 'Children can scan or identify everyday objects and connect them with vocabulary, pronunciation, and context.',
+                ],
+                [
+                    'icon' => 'GP',
+                    'title' => 'Guided Progression',
+                    'text' => 'Words, stages, and rewards are structured to encourage repeat learning instead of one-off interaction.',
+                ],
+                [
+                    'icon' => 'PG',
+                    'title' => 'Parent Awareness',
+                    'text' => 'The wider vision includes parent-facing visibility into progress, usage, and milestone unlocks.',
+                ],
+            ],
+            'benefits' => [
+                'Built for young learners with visual, repetition-based interaction',
+                'Supports vocabulary growth through real-world object recognition',
+                'Designed to connect game progression with educational outcomes',
+                'Can be extended with cross-app learning modules and guided content',
+            ],
+        ],
+        '786rides' => [
+            'eyebrow' => 'Mobility App',
+            'title' => '786Rides',
+            'subtitle' => 'A ride-hailing platform for riders, drivers, and operations teams that need dependable daily mobility workflows.',
+            'theme' => 'navy',
+            'storeCta' => 'Request Product Demo',
+            'features' => [
+                [
+                    'icon' => 'RD',
+                    'title' => 'Rider Experience',
+                    'text' => 'Clear booking flows, trip visibility, and a straightforward passenger experience built for practical use.',
+                ],
+                [
+                    'icon' => 'DR',
+                    'title' => 'Driver Tools',
+                    'text' => 'Driver-side workflows support trip acceptance, status handling, and operational responsiveness.',
+                ],
+                [
+                    'icon' => 'OP',
+                    'title' => 'Dispatch Alignment',
+                    'text' => 'The platform can support local business operations through coordinated dispatch and service oversight.',
+                ],
+            ],
+            'benefits' => [
+                'Designed for real transport operations, not just mock marketplace flows',
+                'Adaptable for local booking models and dispatch-led businesses',
+                'Positioned for expansion into broader mobility management',
+                'Backed by a team that can evolve the platform over time',
+            ],
+        ],
+        'onwayrides' => [
+            'eyebrow' => 'Travel App',
+            'title' => 'OnWayRides',
+            'subtitle' => 'A cleaner everyday ride and travel experience focused on comfort, usability, and practical trip access.',
+            'theme' => 'gold',
+            'storeCta' => 'Ask About Availability',
+            'features' => [
+                [
+                    'icon' => 'UX',
+                    'title' => 'Simple Booking',
+                    'text' => 'The product focuses on a low-friction booking experience for everyday users who want clarity and speed.',
+                ],
+                [
+                    'icon' => 'MB',
+                    'title' => 'Mobile-First Design',
+                    'text' => 'Flows are oriented around mobile interaction patterns so the app feels direct and familiar on the go.',
+                ],
+                [
+                    'icon' => 'SV',
+                    'title' => 'Service Flexibility',
+                    'text' => 'The platform direction allows room for local travel models, bookings, and service variants over time.',
+                ],
+            ],
+            'benefits' => [
+                'Built around everyday usability rather than overloaded screens',
+                'Well suited to local travel and app-based booking experiences',
+                'Can evolve into a larger mobility ecosystem if needed',
+                'Aligned with the broader SoftThinkers product portfolio',
+            ],
         ],
     ],
     'whyChoose' => [
@@ -258,6 +350,23 @@ return [
             'text' => 'Talk to us about mobility apps, kids learning products, business systems, hosting, or platform modernization.',
         ],
     ],
+    'supportCards' => [
+        [
+            'icon' => 'SU',
+            'title' => 'General App Support',
+            'text' => 'Use this route for login problems, feature questions, account concerns, and product access issues.',
+        ],
+        [
+            'icon' => 'AC',
+            'title' => 'Account & Data Requests',
+            'text' => 'Use this route for deletion requests, data access questions, and account status clarifications.',
+        ],
+        [
+            'icon' => 'BS',
+            'title' => 'Business & Partnership',
+            'text' => 'Use this route for product demos, pilots, partnerships, or operational deployment discussions.',
+        ],
+    ],
     'cta' => [
         'title' => 'Need a Custom Solution?',
         'text' => 'We build tailored systems for software products, cloud delivery, mobile apps, business operations, and modern hosting needs.',
@@ -291,7 +400,7 @@ return [
                 ['label' => 'Solutions', 'href' => 'packages.php'],
                 ['label' => 'Contact Us', 'href' => 'contact.php'],
                 ['label' => 'Consultation', 'href' => 'contact.php'],
-                ['label' => 'Partnerships', 'href' => 'contact.php'],
+                ['label' => 'Support', 'href' => 'support.php'],
             ],
         ],
         [

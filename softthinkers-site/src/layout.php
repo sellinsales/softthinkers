@@ -88,8 +88,8 @@ function softthinkers_render_footer(array $content): void
       <div class="footer-bottom">
         <p>&copy; <?= date('Y') ?> SoftThinkers. All rights reserved.</p>
         <div class="footer-meta">
-          <span>Privacy Policy</span>
-          <span>Terms of Service</span>
+          <a href="privacy-policy.php">Privacy Policy</a>
+          <a href="terms.php">Terms of Service</a>
         </div>
       </div>
     </footer>

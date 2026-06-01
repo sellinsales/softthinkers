@@ -11,6 +11,13 @@ $pages = [
     '/portfolio.php',
     '/portal.php',
     '/contact.php',
+    '/app-lingohunt.php',
+    '/app-786rides.php',
+    '/app-onwayrides.php',
+    '/support.php',
+    '/privacy-policy.php',
+    '/terms.php',
+    '/delete-account.php',
 ];
 
 header('Content-Type: application/xml; charset=utf-8');
