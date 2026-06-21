@@ -11,6 +11,8 @@ $pages = [
     '/portfolio.php',
     '/portal.php',
     '/contact.php',
+    '/app-fruitmatch.php',
+    '/app-fruitmatch-privacy.php',
     '/app-lingohunt.php',
     '/app-786rides.php',
     '/app-onwayrides.php',

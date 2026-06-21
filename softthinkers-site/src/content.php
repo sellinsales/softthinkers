@@ -93,6 +93,13 @@ return [
     ],
     'products' => [
         [
+            'title' => 'FruitMatch',
+            'type' => 'Casual Matching Game',
+            'text' => 'A colorful mobile matching game built for quick play sessions, simple tap interaction, and family-friendly casual gameplay.',
+            'theme' => 'gold',
+            'href' => 'app-fruitmatch.php',
+        ],
+        [
             'title' => '786Rides',
             'type' => 'Ride Hailing Platform',
             'text' => 'A rider, driver, and dispatch-ready mobility product designed for dependable bookings and daily operations.',
@@ -146,6 +153,36 @@ return [
         ],
     ],
     'apps' => [
+        'fruitmatch' => [
+            'eyebrow' => 'Casual Game',
+            'title' => 'FruitMatch',
+            'subtitle' => 'A colorful fruit-matching mobile game by SoftThinkers designed for simple play loops, quick sessions, and family-friendly interaction.',
+            'theme' => 'gold',
+            'storeCta' => 'Request Launch Details',
+            'features' => [
+                [
+                    'icon' => 'MT',
+                    'title' => 'Simple Match Gameplay',
+                    'text' => 'FruitMatch focuses on direct tap-and-match play so users can understand the core loop quickly without complicated setup.',
+                ],
+                [
+                    'icon' => 'QS',
+                    'title' => 'Quick Sessions',
+                    'text' => 'The game structure supports short, repeatable play sessions that work well for casual mobile use.',
+                ],
+                [
+                    'icon' => 'FG',
+                    'title' => 'Family-Friendly Direction',
+                    'text' => 'The product direction is toward approachable visuals, straightforward interaction, and public-facing support resources.',
+                ],
+            ],
+            'benefits' => [
+                'Easy-to-understand fruit matching designed for broad accessibility',
+                'Works well for short mobile play sessions without a complex learning curve',
+                'Backed by public SoftThinkers support, privacy, and deletion pages',
+                'Structured to give store reviewers and users clear public policy references',
+            ],
+        ],
         'lingohunt' => [
             'eyebrow' => 'Kids Learning App',
             'title' => 'LingoHunt',
@@ -386,6 +423,7 @@ return [
         [
             'title' => 'Products',
             'links' => [
+                ['label' => 'FruitMatch', 'href' => 'portfolio.php'],
                 ['label' => '786Rides', 'href' => 'portfolio.php'],
                 ['label' => 'OnWayRides', 'href' => 'portfolio.php'],
                 ['label' => 'Kids Learning Games', 'href' => 'portfolio.php'],
@@ -406,6 +444,8 @@ return [
         [
             'title' => 'App Support',
             'links' => [
+                ['label' => 'FruitMatch App Page', 'href' => 'app-fruitmatch.php'],
+                ['label' => 'FruitMatch Privacy Policy', 'href' => 'app-fruitmatch-privacy.php'],
                 ['label' => 'LingoHunt App Page', 'href' => 'app-lingohunt.php'],
                 ['label' => 'Support', 'href' => 'support.php'],
                 ['label' => 'Privacy Policy', 'href' => 'privacy-policy.php'],

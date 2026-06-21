@@ -18,7 +18,7 @@ softthinkers_render_page('Delete Account', 'contact', static function (array $co
       <p class="eyebrow">Account Requests</p>
       <h1>Delete Account / Data Deletion Request</h1>
       <p class="lead">
-        Use this public page to request deletion of a LingoHunt or other SoftThinkers app account and associated stored data.
+        Use this public page to request deletion of a FruitMatch, LingoHunt, or other SoftThinkers app account and associated stored data.
         This is the public deletion link intended for users, store reviewers, and support references.
       </p>
     </section>
@@ -40,7 +40,7 @@ softthinkers_render_page('Delete Account', 'contact', static function (array $co
               App or product
               <select name="service_interest" required>
                 <option value="">Select one</option>
-                <?php foreach (['lingohunt', '786rides', 'onwayrides', 'other-softthinkers-product'] as $option): ?>
+                <?php foreach (['fruitmatch', 'lingohunt', '786rides', 'onwayrides', 'other-softthinkers-product'] as $option): ?>
                   <option value="<?= htmlspecialchars($option) ?>" <?= softthinkers_old('service_interest') === $option ? 'selected' : '' ?>>
                     <?= htmlspecialchars(ucwords(str_replace('-', ' ', $option))) ?>
                   </option>
@@ -58,7 +58,7 @@ softthinkers_render_page('Delete Account', 'contact', static function (array $co
           </div>
           <label>
             Request details
-            <textarea name="message" rows="6" required><?= htmlspecialchars(softthinkers_old('message', 'Please delete my account and associated data. App name: LingoHunt. Account email or identifier: . Additional details: ')) ?></textarea>
+            <textarea name="message" rows="6" required><?= htmlspecialchars(softthinkers_old('message', 'Please delete my account and associated data. App name: FruitMatch. Account email or identifier: . Additional details: ')) ?></textarea>
           </label>
           <div class="honey-field" aria-hidden="true">
             <label>
@@ -97,7 +97,7 @@ softthinkers_render_page('Delete Account', 'contact', static function (array $co
       <article class="legal-panel">
         <h2>What to include</h2>
         <ul>
-          <li>The app or product name, such as LingoHunt, 786Rides, or OnWayRides</li>
+          <li>The app or product name, such as FruitMatch, LingoHunt, 786Rides, or OnWayRides</li>
           <li>The email address, UID, username, or other identifier associated with the account</li>
           <li>Any extra context that helps locate the correct record quickly</li>
         </ul>
@@ -105,6 +105,8 @@ softthinkers_render_page('Delete Account', 'contact', static function (array $co
       <article class="legal-panel">
         <h2>Related public links</h2>
         <ul>
+          <li><a href="app-fruitmatch.php">FruitMatch App Page</a></li>
+          <li><a href="app-fruitmatch-privacy.php">FruitMatch Privacy Policy</a></li>
           <li><a href="support.php">Support</a></li>
           <li><a href="privacy-policy.php">Privacy Policy</a></li>
           <li><a href="terms.php">Terms of Service</a></li>

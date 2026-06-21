@@ -16,11 +16,19 @@ softthinkers_render_page('Privacy Policy', 'contact', static function (array $co
       <h1>Privacy Policy</h1>
       <p class="lead">
         This policy explains how SoftThinkers may collect, use, and protect information across its websites,
-        applications, support channels, and product-related services.
+        applications, support channels, and product-related services, including the FruitMatch mobile game.
       </p>
     </section>
 
     <section class="section-block legal-stack">
+      <article class="legal-panel">
+        <h2>FruitMatch App Reference</h2>
+        <p>
+          For Google Play listing and review purposes, this public SoftThinkers privacy page applies to the FruitMatch app
+          and is supplemented by the dedicated <a href="app-fruitmatch-privacy.php">FruitMatch Privacy Policy page</a>.
+          FruitMatch is published under the SoftThinkers name.
+        </p>
+      </article>
       <article class="legal-panel">
         <h2>Information We May Collect</h2>
         <p>
@@ -43,6 +51,15 @@ softthinkers_render_page('Privacy Policy', 'contact', static function (array $co
           Some SoftThinkers products are intended for children or family-oriented use. In those cases, the goal is to minimize
           unnecessary data collection and keep the experience aligned with learning, safety, and parent-aware product design.
         </p>
+      </article>
+      <article class="legal-panel">
+        <h2>App-Specific Public Links</h2>
+        <ul>
+          <li><a href="app-fruitmatch.php">FruitMatch App Page</a></li>
+          <li><a href="app-fruitmatch-privacy.php">FruitMatch Privacy Policy</a></li>
+          <li><a href="support.php">Support</a></li>
+          <li><a href="delete-account.php">Delete Account / Data Request</a></li>
+        </ul>
       </article>
       <article class="legal-panel">
         <h2>Account Deletion Requests</h2>
